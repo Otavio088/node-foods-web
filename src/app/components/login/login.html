@@ -1,0 +1,26 @@
+<div class="screen-page box-login">
+    <form class="form-login">
+        <h1 class="text-center mb-5">LOGIN</h1>
+        <mat-form-field class="w-100">
+            <mat-label>E-mail </mat-label>
+            <input type="email" matInput [formControl]="email" [errorStateMatcher]="matcher" 
+                name="email" placeholder="Ex.: email@teste.com">
+            @if (email.hasError('email')) {
+                <mat-error>Por favor, insira um e-mail válido!</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <mat-label>Senha</mat-label>
+            <input matInput [formControl]="password" [type]="hidePassword() ? 'password' : 'text'" 
+                name="password" placeholder="Ex.: @Senha123">
+            <button matIconButton matSuffix (click)="passwordHide()"
+                [attr.aria-label]="'Esconder senha'" [attr.aria-pressed]="hidePassword()">
+                <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            @if (password.hasError('minlength')) {
+                <mat-error>Senhas devem ter no mínimo 6 caracteres!</mat-error>
+            }
+        </mat-form-field>
+        <button class="w-100 mt-1" matButton="filled" (click)="loginUser()">Entrar</button>
+    </form>
+</div>
