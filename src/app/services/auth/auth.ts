@@ -14,6 +14,11 @@ export class Auth {
     return firstValueFrom(this.http.post(`${this.baseUrl}/auth/login`, body, {withCredentials: true}));
   }
 
+  async logoutUser(): Promise<any> {
+    return firstValueFrom(this.http.post(`${this.baseUrl}/auth/logout`, {}, {withCredentials: true}))
+      .then((res: any) => this.user = {});
+  }
+
   async checkUser(): Promise<any> {
     return firstValueFrom(this.http.get(`${this.baseUrl}/auth/user`, {withCredentials: true}))
       .then((res: any) => this.user = res.user);

@@ -14,7 +14,4 @@ export class Home {
   userId: number = 5;
   user: any;
 
-  prod() {
-    this.router.navigateByUrl('/products');
-  }
 }

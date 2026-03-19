@@ -1,1 +1,49 @@
-<router-outlet />
+<mat-sidenav-container class="screen-container">
+    <!-- Menu Aside -->
+    <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile ? false : (user && user.id)">
+        <mat-list>
+            <h1 class="d-flex align-items-center m-2" style="justify-content: space-between;">
+                Olá, {{ user && user.first_name ? user.first_name : '' }}.
+                <span>
+                    <button matIconButton (click)="navigateScreen('home')" title="Home"><mat-icon fontIcon="home"></mat-icon></button>
+                    <button matIconButton (click)="exit()" title="Sair"><mat-icon fontIcon="logout"></mat-icon></button>
+                </span>
+            </h1>
+            <br>
+            <mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor" style="background-color: transparent;">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                    <button matButton class="pl-5" (click)="navigateScreen(node.type)">
+                        {{ node.name }}
+                    </button>
+                </mat-tree-node>
+
+                <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodeToggle
+                                [cdkTreeNodeTypeaheadLabel]="node.name">
+                    <button matButton matTreeNodeToggle>
+                        <mat-icon class="mat-icon-rtl-mirror"> {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }} </mat-icon>
+                        {{node.name}}
+                        <br>
+                    </button>
+                </mat-tree-node>
+            </mat-tree>
+        </mat-list>
+    </mat-sidenav>
+
+    <!-- Conteúdo fora do Aside -->
+    <mat-sidenav-content>
+        <!-- Botão de Hamburger (somente mobile) -->
+        @if (isMobile && user && user.id) {
+            <p><button matFab class="aside-button" (click)="sidenav.toggle()">
+                <mat-icon aria-label="Menu icon" fontIcon="menu"></mat-icon>
+            </button></p>
+        }
+
+        <div class="w-100 h-15 mt-4 d-flex align-items-center" style="background-color: grey;">
+            <h1 class="ml-2">Home</h1>
+        </div>
+
+        <!-- Componente referenciado pela rota -->
+        <router-outlet />
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

@@ -4,6 +4,7 @@ import { Home } from './components/home/home';
 import { authGuard } from './guards/auth/auth-guard';
 import { guestGuard } from './guards/guest/guest-guard';
 import { Products } from './components/products/products';
+import { Users } from './components/users/users';
 
 export const routes: Routes = [
     {
@@ -14,6 +15,11 @@ export const routes: Routes = [
     {
         path: 'home',
         component: Home,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'users',
+        component: Users,
         canActivate: [authGuard]
     },
     {

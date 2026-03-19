@@ -1,0 +1,27 @@
+.screen-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.aside-button {
+    margin-left: 5%;
+}
+
+mat-sidenav {
+    background-color: #89c2ff;
+    border-radius: 0;
+}
+
+mat-tree-node {
+    padding-left: 0px !important;
+}
+
+mat-tree-node button[matButton] {
+  width: 100%;
+  justify-content: flex-start;
+  border-radius: 0;
+  font-size: 22px;
+}

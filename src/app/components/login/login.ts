@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { FormControl, FormGroupDirective, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -31,6 +31,7 @@ export class Login {
   http = inject(HttpClient);
   authService = inject(Auth);
   router = inject(Router);
+  isLogin = input<boolean>(true);
 
   passwordHide() {
     this.hidePassword.set(!this.hidePassword());
