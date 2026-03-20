@@ -7,7 +7,7 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIcon } from '@angular/material/icon';
 import { MatDividerModule } from  '@angular/material/divider' ;
 import { MatListModule } from  '@angular/material/list' ;
-import { filter } from 'rxjs';
+import { filter, switchScan } from 'rxjs';
 import { Auth } from './services/auth/auth';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
@@ -63,6 +63,7 @@ export class App {
   ];
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isMobile = false;
+  screenType:string = 'Home';
 
   childrenAccessor = (node: MenuOption) => node.children ? node.children : [];
 
@@ -97,6 +98,21 @@ export class App {
 
     if (this.isMobile) {
       this.sidenav.close()
+    }
+
+    switch (screen) {
+      case 'home':
+        this.screenType = 'Home';
+        break;
+      case 'users':
+        this.screenType = 'Listagem de Usuários';
+        break;
+      case 'home':
+        this.screenType = 'Home';
+        break;
+    
+      default:
+        break;
     }
   }
 

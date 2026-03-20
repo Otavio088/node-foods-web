@@ -1,4 +1,4 @@
-<mat-sidenav-container class="screen-container">
+<mat-sidenav-container class="screen-container" style="background-color: #e9e9e9;">
     <!-- Menu Aside -->
     <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile ? false : (user && user.id)">
         <mat-list>
@@ -32,18 +32,22 @@
     <!-- Conteúdo fora do Aside -->
     <mat-sidenav-content>
         <!-- Botão de Hamburger (somente mobile) -->
-        @if (isMobile && user && user.id) {
+        @if (isMobile && user.id) {
             <p><button matFab class="aside-button" (click)="sidenav.toggle()">
                 <mat-icon aria-label="Menu icon" fontIcon="menu"></mat-icon>
             </button></p>
         }
 
-        <div class="w-100 h-15 mt-4 d-flex align-items-center" style="background-color: grey;">
-            <h1 class="ml-2">Home</h1>
-        </div>
+        @if (user && user.id) {
+            <div class="w-100 h-15 mt-4 d-flex align-items-center" style="background-color: #fcfcfc;">
+                <h1 class="ml-2">{{screenType}}</h1>
+            </div>
+        }
 
         <!-- Componente referenciado pela rota -->
-        <router-outlet />
+        <div class="mt-4 m-1 p-2 bg-screen">
+            <router-outlet />
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
 
