@@ -13,7 +13,11 @@ export class User {
     return firstValueFrom(this.http.get(`${this.baseUrl}/users`, {withCredentials: true}));
   }
 
-  getUser(userId: number): Promise<any> {
+  getOne(userId: number): Promise<any> {
     return firstValueFrom(this.http.get(`${this.baseUrl}/users/${userId}`, {withCredentials: true}));
+  }
+
+  delete(userId: number): Promise<any> {
+    return firstValueFrom(this.http.delete(`${this.baseUrl}/users/${userId}`, {withCredentials: true}));
   }
 }

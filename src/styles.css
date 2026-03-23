@@ -16,6 +16,10 @@
     align-items: center !important;
 }
 
+.justify-space-between {
+    justify-content: space-between !important;
+}
+
 /* Gap */
 .gap-1 {
     gap: 10px !important;
@@ -223,4 +227,14 @@
 }
 .pr-5 {
     padding-right: 50px !important;
+}
+
+/* Estilos  */
+
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+.bg-white {
+    background-color: #fcfcfc !important;
 }

@@ -26,7 +26,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class Login {
   authService = inject(Auth);
   router = inject(Router);
-  toastr = inject(ToastrService);
+  toastrService = inject(ToastrService);
   email = new FormControl('', [Validators.email]);
   password = new FormControl('', [Validators.minLength(6)]);
   matcher = new MyErrorStateMatcher();
@@ -38,6 +38,13 @@ export class Login {
   }
 
   async loginUser() {
+    let msg = this.fieldsValidation();
+
+    if (msg !== '') {
+      this.toastrService.warning(msg, 'Aviso', { timeOut: 2000, enableHtml: true });
+      return;
+    }
+
     const data = {
       email: this.email.value,
       password: this.password.value
@@ -45,11 +52,24 @@ export class Login {
 
     try {
       const user = await this.authService.loginUser(data);
-      this.toastr.success(user.message, 'Sucesso', { timeOut: 2000 });
+      this.toastrService.success(user.message, 'Sucesso', { timeOut: 2000 });
       this.router.navigateByUrl('/home');
     } catch (err: any) {
-      this.toastr.error(err.error.message, 'Erro', { timeOut: 2000 });
+      this.toastrService.error(err.error.message, 'Erro', { timeOut: 2000 });
     }
   }
 
+  fieldsValidation(): string {
+    let msg: string = '';
+
+    if (this.email.hasError('email') || this.email.value === '') {
+      msg += 'E-mail inválido!<br>';
+    }
+
+    if (this.password.hasError('minlength') || this.password.value === '') {
+      msg += 'Senha inválida!';
+    }
+
+    return msg;
+  }
 }

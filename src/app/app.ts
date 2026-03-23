@@ -63,7 +63,9 @@ export class App {
   ];
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isMobile = false;
-  screenType:string = 'Home';
+  screenType: string = 'Home';
+  nameIcon: string = 'group';
+  url: string = '/';
 
   childrenAccessor = (node: MenuOption) => node.children ? node.children : [];
 
@@ -73,12 +75,14 @@ export class App {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        const url = event.urlAfterRedirects || '/';
+        this.url = event.urlAfterRedirects || '/';
 
-        if (url === '/') {
+        if (this.url === '/') {
           this.user = {};
           return;
         }
+
+        this.setupTypeScreen();
 
         if (!this.user || !this.user.id) {
           this.user = this.authService.getUser();
@@ -99,21 +103,6 @@ export class App {
     if (this.isMobile) {
       this.sidenav.close()
     }
-
-    switch (screen) {
-      case 'home':
-        this.screenType = 'Home';
-        break;
-      case 'users':
-        this.screenType = 'Listagem de Usuários';
-        break;
-      case 'home':
-        this.screenType = 'Home';
-        break;
-    
-      default:
-        break;
-    }
   }
 
   async exit() {
@@ -122,6 +111,25 @@ export class App {
       this.router.navigateByUrl('/');
     } catch (err) {
       console.log('err: ', err);
+    }
+  }
+
+  setupTypeScreen() {
+    switch (this.url) {
+      case '/home':
+        this.screenType = 'Home';
+        this.nameIcon = 'home';
+        break;
+      case '/users':
+        this.screenType = 'Listagem de Usuários';
+        this.nameIcon = 'group';
+        break;
+      case '/products':
+        this.screenType = 'Listagem de Produtos';
+        this.nameIcon = 'fastfood';
+        break;
+      default:
+        break;
     }
   }
 }

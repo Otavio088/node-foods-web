@@ -1,8 +1,8 @@
-<mat-sidenav-container class="screen-container" style="background-color: #e9e9e9;">
+<mat-sidenav-container class="screen-container">
     <!-- Menu Aside -->
     <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile ? false : (user && user.id)">
         <mat-list>
-            <h1 class="d-flex align-items-center m-2" style="justify-content: space-between;">
+            <h1 class="d-flex align-items-center justify-space-between m-2">
                 Olá, {{ user && user.first_name ? user.first_name : '' }}.
                 <span>
                     <button matIconButton (click)="navigateScreen('home')" title="Home"><mat-icon fontIcon="home"></mat-icon></button>
@@ -10,19 +10,19 @@
                 </span>
             </h1>
             <br>
-            <mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor" style="background-color: transparent;">
-                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-                    <button matButton class="pl-5" (click)="navigateScreen(node.type)">
-                        {{ node.name }}
-                    </button>
-                </mat-tree-node>
-
+            <mat-tree #tree class="bg-transparent" [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodeToggle
                                 [cdkTreeNodeTypeaheadLabel]="node.name">
                     <button matButton matTreeNodeToggle>
                         <mat-icon class="mat-icon-rtl-mirror"> {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }} </mat-icon>
                         {{node.name}}
                         <br>
+                    </button>
+                </mat-tree-node>
+
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                    <button matButton class="pl-5" (click)="navigateScreen(node.type)">
+                        {{ node.name }}
                     </button>
                 </mat-tree-node>
             </mat-tree>
@@ -32,20 +32,22 @@
     <!-- Conteúdo fora do Aside -->
     <mat-sidenav-content>
         <!-- Botão de Hamburger (somente mobile) -->
-        @if (isMobile && user.id) {
+        @if (isMobile && user && user.id) {
             <p><button matFab class="aside-button" (click)="sidenav.toggle()">
                 <mat-icon aria-label="Menu icon" fontIcon="menu"></mat-icon>
             </button></p>
         }
 
         @if (user && user.id) {
-            <div class="w-100 h-15 mt-4 d-flex align-items-center" style="background-color: #fcfcfc;">
-                <h1 class="ml-2">{{screenType}}</h1>
+            <div class="w-100 h-15 mt-4 d-flex align-items-center bg-white">
+                <h1 class="d-flex align-items-center justify-space-between m-2 gap-1">
+                    <mat-icon class="icon-title" [fontIcon]="nameIcon"></mat-icon> {{screenType}}
+                </h1>
             </div>
         }
 
-        <!-- Componente referenciado pela rota -->
-        <div class="mt-4 m-1 p-2 bg-screen">
+        <div [class]="url != '/' ? 'mt-4 m-2 p-2 screen-block bg-white' : ''">
+            <!-- Componente referenciado pela rota -->
             <router-outlet />
         </div>
     </mat-sidenav-content>

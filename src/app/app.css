@@ -4,10 +4,10 @@
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: #abc7ff41;
 }
 
-.bg-screen {
-  background-color: #fcfcfc;
+.screen-block {
   min-height: 70vh;
   border-radius: 5px;
 }
@@ -16,8 +16,18 @@
     margin-left: 5%;
 }
 
+.icon-title {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+h1, h2, h3, h4, h5, h6, p, button {
+  color: #44474e !important;
+}
+
 mat-sidenav {
-    background-color: #89c2ff;
+    background-color: #68adf6;
     border-radius: 0;
 }
 
