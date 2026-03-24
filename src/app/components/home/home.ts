@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { User } from '../../services/user/user';
+import { UserService } from '../../services/user/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
   styleUrl: './home.css',
 })
 export class Home {
-  userService = inject(User);
-  router = inject(Router);
-  userId: number = 5;
-  user: any;
+  // userService = inject(UserService);
+  // router = inject(Router);
+  // userId: number = 5;
+  // user: any;
 
 }

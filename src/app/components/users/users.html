@@ -35,7 +35,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações</th>
         <td mat-cell *matCellDef="let row">
           <span class="d-flex">
-            <button matIconButton><mat-icon fontIcon="edit"></mat-icon></button>
+            <button matIconButton (click)="edit(row.id)"><mat-icon fontIcon="edit"></mat-icon></button>
             <button matIconButton (click)="delete(row.id, row.name)"><mat-icon fontIcon="delete"></mat-icon></button>
           </span>
         </td>

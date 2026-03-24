@@ -20,6 +20,10 @@
     justify-content: space-between !important;
 }
 
+.justify-end {
+    justify-content: end !important;
+}
+
 /* Gap */
 .gap-1 {
     gap: 10px !important;

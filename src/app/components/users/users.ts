@@ -4,12 +4,13 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { User } from '../../services/user/user';
+import { UserService } from '../../services/user/user';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalDelete } from '../modal-delete/modal-delete';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -22,11 +23,12 @@ import { ToastrService } from 'ngx-toastr';
 export class Users {
   readonly dialog = inject(MatDialog);
   toastrService = inject(ToastrService);
+  router = inject(Router);
   displayedColumns: string[] = ['id', 'name', 'email', 'created_at', 'active', 'actions'];
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  userService = inject(User);
+  userService = inject(UserService);
 
   async ngOnInit(): Promise<void> {
     await this.setupTableData();
@@ -35,7 +37,7 @@ export class Users {
   async setupTableData() {
     const res = await this.userService.getAll();
     const users = res.data ? res.data.map((d: any) => ({
-      ...d, created_at_formatted: new Date(d.created_at).toLocaleDateString()
+      ...d, created_at_formatted: new Date(d.created_at).toLocaleDateString('pt-br')
     })) : [];
 
     this.dataSource = new MatTableDataSource(users);
@@ -50,6 +52,10 @@ export class Users {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  edit(userId: number) {
+    this.router.navigateByUrl(`user/${userId}`);
   }
 
   async delete(userId: number, userName: string) {

@@ -1,0 +1,79 @@
+<div class="user-container">
+    <div class="d-flex align-items-center justify-space-between mr-1">
+        <h2> Informações do Usuário</h2>
+        <mat-radio-group [formControl]="active">
+            <label>Ativo: </label>
+            <mat-radio-button [value]="true">Sim</mat-radio-button>
+            <mat-radio-button [value]="false">Não</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <hr>
+    <br>
+    <form [formGroup]="options">
+        <div class="form-fields">
+            <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input matInput [formControl]="name" placeholder="Ex. João">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput [formControl]="email" placeholder="Ex. email@teste.com">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Papéis</mat-label>
+                <mat-select [formControl]="roles" multiple>
+                    <mat-select-trigger>
+                    {{ allRoles.find(r => r.id === roles.value?.[0])?.name || '' }}
+                    @if ((roles.value?.length || 0) > 1) {
+                        <span>
+                        (+{{(roles.value?.length || 0) - 1}} {{roles.value?.length === 2 ? 'other' : 'others'}})
+                        </span>
+                    }
+                    </mat-select-trigger>
+                    @for (role of allRoles; track role) {
+                <mat-option [value]="role.id">{{role.name}}</mat-option>
+                }
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-fields">
+            <mat-form-field>
+                <mat-label>Senha</mat-label>
+                <input matInput [formControl]="password" [type]="hidePassword() ? 'password' : 'text'" 
+                    name="password" placeholder="Ex. @Senha123">
+                <button matIconButton matSuffix (click)="passwordHide()"
+                    [attr.aria-label]="'Esconder senha'" [attr.aria-pressed]="hidePassword()">
+                    <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                @if (password.hasError('minlength')) {
+                    <mat-error>Senhas devem ter no mínimo 6 caracteres!</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Confirmassão de Senha</mat-label>
+                <input matInput [formControl]="password_confirm" [type]="hidePasswordConfirm() ? 'password' : 'text'" 
+                    name="password_confirm" placeholder="Ex. @Senha123">
+                <button matIconButton matSuffix (click)="passwordHideConfirm()"
+                    [attr.aria-label]="'Esconder confirmação de senha'" [attr.aria-pressed]="hidePasswordConfirm()">
+                    <mat-icon>{{hidePasswordConfirm() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                @if (password_confirm.hasError('minlength')) {
+                    <mat-error>Senhas devem ter no mínimo 6 caracteres!</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Data de Última atualização</mat-label>
+                <input matInput [formControl]="updated_at">
+            </mat-form-field>
+        </div>
+
+        <div class="d-flex justify-end mr-2">
+            <button matButton="filled" (click)="update()"><mat-icon fontIcon="save"></mat-icon> Atualizar</button>
+        </div>
+    </form>
+</div>

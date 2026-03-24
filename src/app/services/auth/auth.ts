@@ -5,7 +5,7 @@ import { firstValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class Auth {
+export class AuthService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:3000';
   private user: any = {};
