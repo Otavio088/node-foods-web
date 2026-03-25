@@ -17,6 +17,14 @@ export class UserService {
     return firstValueFrom(this.http.get(`${this.baseUrl}/users/${userId}`, {withCredentials: true}));
   }
 
+  create(body: any): Promise<any> {
+    return firstValueFrom(this.http.post(`${this.baseUrl}/users`, body, {withCredentials: true}));
+  }
+
+  update(userId: number, body: any): Promise<any> {
+    return firstValueFrom(this.http.put(`${this.baseUrl}/users/${userId}`, body, {withCredentials: true}));
+  }
+
   delete(userId: number): Promise<any> {
     return firstValueFrom(this.http.delete(`${this.baseUrl}/users/${userId}`, {withCredentials: true}));
   }

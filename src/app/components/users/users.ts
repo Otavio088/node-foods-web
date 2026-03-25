@@ -55,7 +55,7 @@ export class Users {
   }
 
   edit(userId: number) {
-    this.router.navigateByUrl(`user/${userId}`);
+    this.router.navigateByUrl(`users/${userId}`);
   }
 
   async delete(userId: number, userName: string) {

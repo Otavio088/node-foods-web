@@ -26,13 +26,13 @@ export const routes: Routes = [
         data: { title: 'Usuários', icon: 'group' }
     },
     {
-        path: 'user/new',
+        path: 'users/new',
         component: User,
         canActivate: [authGuard],
         data: { title: 'Novo Usuário', icon: 'person_add' }
     },
     {
-        path: 'user/:id',
+        path: 'users/:id',
         component: User,
         canActivate: [authGuard],
         data: { title: 'Edição de Usuário', icon: 'person_search' }

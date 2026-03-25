@@ -9,13 +9,6 @@ import { AuthService } from '../../services/auth/auth';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
 @Component({
   selector: 'app-login',
   imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatIconModule],
@@ -29,7 +22,6 @@ export class Login {
   toastrService = inject(ToastrService);
   email = new FormControl('', [Validators.email]);
   password = new FormControl('', [Validators.minLength(6)]);
-  matcher = new MyErrorStateMatcher();
   hidePassword = signal<boolean>(true);
   isLogin = input<boolean>(true);
 
@@ -38,7 +30,7 @@ export class Login {
   }
 
   async loginUser() {
-    let msg = this.fieldsValidation();
+    const msg = this.fieldsValidation();
 
     if (msg !== '') {
       this.toastrService.warning(msg, 'Aviso', { timeOut: 2000, enableHtml: true });
