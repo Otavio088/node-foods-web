@@ -14,8 +14,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIcon, MatButtonModule, 
-    MatButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIcon, MatButtonModule],
   templateUrl: './users.html',
   styleUrl: './users.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -31,15 +30,19 @@ export class Users {
   userService = inject(UserService);
 
   async ngOnInit(): Promise<void> {
-    await this.setupTableData();
+    await this.getUsers();
   }
 
-  async setupTableData() {
+  async getUsers() {
     const res = await this.userService.getAll();
     const users = res.data ? res.data.map((d: any) => ({
       ...d, created_at_formatted: new Date(d.created_at).toLocaleDateString('pt-br')
     })) : [];
 
+    this.setupTableData(users);
+  }
+
+  async setupTableData(users: any) {
     this.dataSource = new MatTableDataSource(users);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -72,7 +75,7 @@ export class Users {
       }
 
       this.userService.delete(userId).then((resDelete) => {
-        this.setupTableData();
+        this.getUsers();
         this.toastrService.success(resDelete.message, 'Sucesso', { timeOut: 2000 });
       }, (errDelete) => {
         this.toastrService.error(errDelete.error.message, 'Erro', { timeOut: 2000 });

@@ -1,7 +1,7 @@
 <div class="user-container">
     <div class="d-flex align-items-center justify-space-between mr-1">
         <h2> Informações do Usuário</h2>
-        <mat-radio-group [formControl]="active">
+        <mat-radio-group class="mobile-active" [formControl]="active">
             <label>Ativo: </label>
             <mat-radio-button [value]="true">Sim</mat-radio-button>
             <mat-radio-button [value]="false">Não</mat-radio-button>
@@ -78,11 +78,13 @@
             }
         </div>
 
-        <div class="d-flex justify-space-between">
+        <div class="d-flex justify-space-between mobile-buttons">
             <div>
-                <button matButton="filled" (click)="return()"><mat-icon fontIcon="keyboard_return"></mat-icon> Voltar</button>
+                @if (isEdition) {
+                    <button matButton="filled" (click)="return()"><mat-icon fontIcon="keyboard_return"></mat-icon> Voltar</button>
+                }
             </div>
-            <div class="mr-2">
+            <div class="mr-2 exit-or-save">
                 @if (isEdition) {
                     <button class="mr-1" matButton="filled" (click)="delete(userId, userName)" style="background-color: #DE3D20;"><mat-icon fontIcon="delete"></mat-icon> Excluir</button>
                 }

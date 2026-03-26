@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user/user';
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -16,7 +15,7 @@ import { ModalDelete } from '../modal-delete/modal-delete';
 
 @Component({
   selector: 'app-user',
-  imports: [FormsModule, ReactiveFormsModule, MatCheckboxModule, MatRadioModule, MatFormFieldModule, 
+  imports: [FormsModule, ReactiveFormsModule, MatRadioModule, MatFormFieldModule, 
     MatInputModule, MatSelectModule, MatIconModule, MatButtonModule],
   templateUrl: './user.html',
   styleUrl: './user.css',

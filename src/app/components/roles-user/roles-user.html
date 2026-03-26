@@ -1,0 +1,44 @@
+<div class="mat-elevation-z8">
+  <mat-form-field>
+    <mat-label>Filtro</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Admin" #input>
+  </mat-form-field>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome</th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="modules_names">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Módulos</th>
+        <td mat-cell *matCellDef="let row">{{row.modules_names}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="updated_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Última Atualização</th>
+        <td mat-cell *matCellDef="let row"> {{row.updated_at_formatted}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações</th>
+        <td mat-cell *matCellDef="let row">
+          <span class="d-flex">
+            <button matIconButton (click)="edit(row.id, row.name, row.modules)" [disabled]="row.name == 'Admin'"><mat-icon fontIcon="edit"></mat-icon></button>
+            <button matIconButton (click)="delete(row.id, row.name)" [disabled]="row.name == 'Admin'"><mat-icon fontIcon="delete"></mat-icon></button>
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Nenhum Usuário foi encontrado...</td>
+      </tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[25, 50, 100, 200]" aria-label="Selecione a paginação de usuários"></mat-paginator>
+</div>

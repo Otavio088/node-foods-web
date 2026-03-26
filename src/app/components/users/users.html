@@ -2,8 +2,8 @@
   <mat-form-field>
     <mat-label>Filtro</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. João" #input>
-
   </mat-form-field>
+
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">

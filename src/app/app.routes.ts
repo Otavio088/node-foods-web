@@ -6,6 +6,7 @@ import { guestGuard } from './guards/guest/guest-guard';
 import { Products } from './components/products/products';
 import { Users } from './components/users/users';
 import { User } from './components/user/user';
+import { RolesUser } from './components/roles-user/roles-user';
 
 export const routes: Routes = [
     {
@@ -30,6 +31,12 @@ export const routes: Routes = [
         component: User,
         canActivate: [authGuard],
         data: { title: 'Novo Usuário', icon: 'person_add' }
+    },
+    {
+        path: 'users/roles',
+        component: RolesUser,
+        canActivate: [authGuard],
+        data: { title: 'Tipos de Usuário', icon: 'lock_person' }
     },
     {
         path: 'users/:id',

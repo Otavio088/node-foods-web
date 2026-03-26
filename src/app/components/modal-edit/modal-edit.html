@@ -1,0 +1,34 @@
+<h2 mat-dialog-title class="d-flex align-items-center p-3"><mat-icon fontIcon="edit"></mat-icon> {{ data.title }}</h2>
+<mat-dialog-content class="p-2">
+    <form [formGroup]="options">
+        @if (screen == 'roles-user') {
+        <div class="form-fields gap-2">
+            <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input matInput [formControl]="name" placeholder="Ex. João">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Módulos do Sistema</mat-label>
+                <mat-select [formControl]="modules" multiple>
+                    <mat-select-trigger>
+                        {{ allModules.find(r => r.id === modules.value?.[0])?.name || '' }}
+                        @if ((modules.value?.length || 0) > 1) {
+                            <span>
+                            (+{{(modules.value?.length || 0) - 1}} {{modules.value?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                        }
+                    </mat-select-trigger>
+                    @for (module of allModules; track module) {
+                        <mat-option [value]="module.id">{{module.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+        }
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancelar</button>
+  <button matButton [mat-dialog-close]="{ type: 'update', data: options.value}">Atualizar</button>
+</mat-dialog-actions>

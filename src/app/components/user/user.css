@@ -22,3 +22,25 @@
   display: flex;
   align-items: flex-start;
 }
+
+@media (max-width: 768px) {
+  .mobile-active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .mobile-buttons button {
+    width: 100%;
+  }
+
+  .exit-or-save {
+    margin: 0px !important;
+    display: flex;
+  }
+}

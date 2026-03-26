@@ -63,6 +63,7 @@ export class App implements OnInit {
       children: [
         { name: 'Listar', type: 'users' },
         { name: 'Novo', type: 'users/new' },
+        { name: 'Papéis', type: 'users/roles' }
       ],
     },
   ];
