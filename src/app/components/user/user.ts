@@ -96,7 +96,7 @@ export class User implements OnInit {
     const active = user.active === 1 ? true : false;
     this.active.setValue(active);
 
-    this.updated_at.setValue(new Date(user.updated_at).toLocaleDateString('pt-br'));
+    this.updated_at.setValue(new Date(user.updated_at).toLocaleString('pt-br'));
     this.updated_at.disable();
   }
 
@@ -117,22 +117,19 @@ export class User implements OnInit {
     }
 
     let res;
-
-    if (this.isEdition) {
-      try {
+    try {
+      if (this.isEdition) {
         res = await this.userService.update(this.userId, this.options.value);
         const user = res && res.data ? res.data : {};
         this.setupFields(user);
-      } catch (err: any) {
-        this.toastrService.error(err.error.message, 'Erro', {timeOut: 2000});
+      } else {
+        res = await this.userService.create(this.options.value);
       }
-      return;
-    }
-
-    try {
-      res = await this.userService.create(this.options.value);
       this.toastrService.success(res.message, 'Sucesso', {timeOut: 2000});
-      this.router.navigateByUrl('users');
+
+      if (!this.isEdition)
+        this.router.navigateByUrl('users');
+
     } catch (err: any) {
       this.toastrService.error(err.error.message, 'Erro', {timeOut: 2000});
     }

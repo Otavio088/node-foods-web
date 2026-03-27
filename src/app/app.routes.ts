@@ -7,6 +7,7 @@ import { Products } from './components/products/products';
 import { Users } from './components/users/users';
 import { User } from './components/user/user';
 import { RolesUser } from './components/roles-user/roles-user';
+import { permissionGuard } from './guards/permission/permission-guard';
 
 export const routes: Routes = [
     {
@@ -23,31 +24,31 @@ export const routes: Routes = [
     {
         path: 'users',
         component: Users,
-        canActivate: [authGuard],
-        data: { title: 'Usuários', icon: 'group' }
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Usuários', icon: 'group', module: 'users' }
     },
     {
         path: 'users/new',
         component: User,
-        canActivate: [authGuard],
-        data: { title: 'Novo Usuário', icon: 'person_add' }
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Novo Usuário', icon: 'person_add', module: 'users' }
     },
     {
         path: 'users/roles',
         component: RolesUser,
-        canActivate: [authGuard],
-        data: { title: 'Tipos de Usuário', icon: 'lock_person' }
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Papéis de Usuário', icon: 'lock_person', module: 'users' }
     },
     {
         path: 'users/:id',
         component: User,
-        canActivate: [authGuard],
-        data: { title: 'Edição de Usuário', icon: 'person_search' }
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Edição de Usuário', icon: 'person_search', module: 'users' }
     },
     {
         path: 'products',
         component: Products,
-        canActivate: [authGuard],
-        data: { title: 'Listagem de Produtos', icon: 'fastfood' }
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Listagem de Produtos', icon: 'fastfood', module: 'products' }
     }
 ];

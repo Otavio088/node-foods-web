@@ -242,3 +242,9 @@
 .bg-white {
     background-color: #fcfcfc !important;
 }
+
+.form-fields {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}

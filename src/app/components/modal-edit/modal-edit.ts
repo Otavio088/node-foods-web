@@ -11,8 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-modal-edit',
   imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule, FormsModule, ReactiveFormsModule,
-    MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule
-  ],
+    MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule],
   templateUrl: './modal-edit.html',
   styleUrl: './modal-edit.css',
 })

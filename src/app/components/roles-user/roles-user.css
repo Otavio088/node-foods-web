@@ -15,3 +15,13 @@ td, th {
   width: 100%;
   overflow-x: auto;
 }
+
+@media (max-width: 768px) {
+  .custom-mobile-fields {
+    display: block;
+  }
+
+  .save-role-mobile {
+    width: 100% !important;
+  }
+}

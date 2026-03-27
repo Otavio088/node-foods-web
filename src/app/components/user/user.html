@@ -44,7 +44,7 @@
         </div>
 
         <div class="form-fields">
-            <mat-form-field>
+            <mat-form-field [class]="!isEdition ? 'w-100' : ''">
                 <mat-label>Senha</mat-label>
                 <input matInput [formControl]="password" [type]="hidePassword() ? 'password' : 'text'" 
                     name="password" placeholder="Ex. @Senha123">
@@ -57,7 +57,7 @@
                 }
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field [class]="!isEdition ? 'w-100' : ''">
                 <mat-label>Confirmação de Senha</mat-label>
                 <input matInput [formControl]="password_confirm" [type]="hidePasswordConfirm() ? 'password' : 'text'" 
                     name="password_confirm" placeholder="Ex. @Senha123">
@@ -84,7 +84,7 @@
                     <button matButton="filled" (click)="return()"><mat-icon fontIcon="keyboard_return"></mat-icon> Voltar</button>
                 }
             </div>
-            <div class="mr-2 exit-or-save">
+            <div class="exit-or-save">
                 @if (isEdition) {
                     <button class="mr-1" matButton="filled" (click)="delete(userId, userName)" style="background-color: #DE3D20;"><mat-icon fontIcon="delete"></mat-icon> Excluir</button>
                 }

@@ -39,10 +39,12 @@ export class App implements OnInit {
   user: any;
   events: string[] = [];
   opened: boolean = true;
-  dataSource: MenuOption[] = [
+  hasMenu: boolean = false;
+  dataSource: MenuOption[] = [];
+  menu: MenuOption[] = [
     {
       name: 'Pedidos',
-      type: '',
+      type: 'orders',
       children: [
         { name: 'Listar', type: 'orders' }, 
         { name: 'Novo', type: 'orders/new' }, 
@@ -51,7 +53,7 @@ export class App implements OnInit {
     },
     {
       name: 'Produtos',
-      type: '',
+      type: 'products',
       children: [
         { name: 'Listar', type: 'products' }, 
         { name: 'Novo', type: 'products/new' },
@@ -59,7 +61,7 @@ export class App implements OnInit {
     },
     {
       name: 'Usuários',
-      type: '',
+      type: 'users',
       children: [
         { name: 'Listar', type: 'users' },
         { name: 'Novo', type: 'users/new' },
@@ -102,6 +104,9 @@ export class App implements OnInit {
 
         this.screenType = route?.snapshot.data['title'] || '';
         this.nameIcon = route?.snapshot.data['icon'] || '';
+
+        if (!this.hasMenu)
+          this.setupMenuOptions();
       });
   }
 
@@ -120,9 +125,23 @@ export class App implements OnInit {
     }
   }
 
+  setupMenuOptions() {
+    this.hasMenu = true;
+
+    if (!this.user.modules || this.user.modules.length === 0) {
+      this.dataSource = [];
+      return;
+    }
+
+    this.dataSource = this.menu.filter(option =>
+      this.user.modules.includes(option.type)
+    );
+  }
+
   async exit() {
     try {
       await this.authService.logoutUser();
+      this.hasMenu = false;
       this.router.navigateByUrl('/');
     } catch (err) {
       console.log('err: ', err);
