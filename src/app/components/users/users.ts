@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   styleUrl: './users.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Users {
+export class Users implements OnInit {
   readonly dialog = inject(MatDialog);
   toastrService = inject(ToastrService);
   router = inject(Router);
