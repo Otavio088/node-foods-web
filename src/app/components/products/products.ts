@@ -36,7 +36,7 @@ export class Products implements OnInit {
   async getProducts() {
     const res = await this.productService.getAll();
     const users = res.data ? res.data.map((d: any) => ({
-      ...d, created_at_formatted: new Date(d.created_at).toLocaleString('pt-br'),
+      ...d, created_at: new Date(d.created_at).toLocaleString('pt-br'),
         price: d.price.replace('.', ',')
     })) : [];
 

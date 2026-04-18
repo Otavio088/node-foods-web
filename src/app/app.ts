@@ -57,6 +57,7 @@ export class App implements OnInit {
       children: [
         { name: 'Listar', type: 'products' }, 
         { name: 'Novo', type: 'products/new' },
+        { name: 'Ingredientes', type: 'products/ingredients' }
       ],
     },
     {

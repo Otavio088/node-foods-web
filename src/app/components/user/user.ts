@@ -32,7 +32,7 @@ export class User implements OnInit {
   hidePassword = signal<boolean>(true);
   hidePasswordConfirm = signal<boolean>(true);
   active = new FormControl(true);
-  updated_at = new FormControl('');
+  updated_at: string = '';
   roles = new FormControl('');
   allRoles: any[] = [];
   options = inject(FormBuilder).group({
@@ -96,8 +96,7 @@ export class User implements OnInit {
     const active = user.active === 1 ? true : false;
     this.active.setValue(active);
 
-    this.updated_at.setValue(new Date(user.updated_at).toLocaleString('pt-br'));
-    this.updated_at.disable();
+    this.updated_at = new Date(user.updated_at).toLocaleString('pt-br');
   }
 
   passwordHide() {

@@ -18,14 +18,13 @@ import { MatSelectModule } from '@angular/material/select';
 export class ModalEdit {
   data = inject(MAT_DIALOG_DATA);
   screen = this.data.screen || '';
-  allModules = this.data.modules || [];
-  rolesUserService = inject(RolesUserService);
-  roleUser: any;
   name = new FormControl(this.data.name);
   modules = new FormControl(this.data.role_user_modules);
+  unit_type = new FormControl(this.data.unit_type_id);
   allRoles: any[] = [];
   options = inject(FormBuilder).group({
     name: this.name,
-    modules_ids: this.modules
+    modules_ids: this.modules,
+    unit_type_id: this.unit_type
   });
 }

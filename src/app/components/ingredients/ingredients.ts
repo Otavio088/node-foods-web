@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
-import { RolesUserService } from '../../services/roles-user/roles-user';
+import { IngredientsService } from '../../services/ingredients/ingredients';
+import { UnitTypesService } from '../../services/unit-types/unit-types';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -15,43 +16,44 @@ import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@ang
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'app-roles-user',
+  selector: 'app-ingredients',
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, 
     MatButtonModule, FormsModule, ReactiveFormsModule, MatSelectModule],
-  templateUrl: './roles-user.html',
-  styleUrl: './roles-user.css',
+  templateUrl: './ingredients.html',
+  styleUrl: './ingredients.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RolesUser implements OnInit {
-  rolesUserService = inject(RolesUserService);
-  displayedColumns: string[] = ['name', 'modules_names', 'created_at', 'updated_at', 'actions'];
+export class Ingredients implements OnInit {
+  ingredientsService = inject(IngredientsService);
+  unitTypesService = inject(UnitTypesService);
+  displayedColumns: string[] = ['name', 'unit_type_name', 'created_at', 'updated_at', 'actions'];
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   readonly dialog = inject(MatDialog);
   toastrService = inject(ToastrService);
-  allModules: any[] = [];
+  allUnitTypes: any[] = [];
   name = new FormControl('');
-  modules = new FormControl('');
-  dataNewRoleUser = inject(FormBuilder).group({
+  unitType = new FormControl('');
+  dataNewIngredient = inject(FormBuilder).group({
     name: this.name,
-    modules_ids: this.modules
+    unit_type_id: this.unitType
   });
 
   async ngOnInit(): Promise<void> {
-    await this.getRolesUser();
-    await this.getModules();
+    await this.getIngredients();
+    await this.getUnitTypes();
   }
 
-  async getRolesUser() {
-    const res = await this.rolesUserService.getAll();
-    const rolesUser = res.data ? res.data.map((d: any) => ({
+  async getIngredients() {
+    const res = await this.ingredientsService.getAll();
+    const ingredients = res.data ? res.data.map((d: any) => ({
       ...d, updated_at: new Date(d.updated_at).toLocaleString('pt-br'),
         created_at: new Date(d.created_at).toLocaleString('pt-br'),
-        modules_names: d.modules.map((m: any) => m.name).join(', ')
+        unit_type_name: `${d.unit_type.name} (${d.unit_type.type})`
     })) : [];
 
-    this.setupTableData(rolesUser);
+    this.setupTableData(ingredients);
   }
 
   setupTableData(rolesUser: any) {
@@ -60,9 +62,9 @@ export class RolesUser implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  async getModules() {
-    const res = await this.rolesUserService.getModules();
-    this.allModules = res.data ? res.data : [];
+  async getUnitTypes() {
+    const res = await this.unitTypesService.getAll();
+    this.allUnitTypes = res.data ? res.data : [];
   }
 
   applyFilter(event: Event) {
@@ -83,9 +85,9 @@ export class RolesUser implements OnInit {
     }
 
     try {
-      const res = await this.rolesUserService.create(this.dataNewRoleUser.value);
+      const res = await this.ingredientsService.create(this.dataNewIngredient.value);
       this.toastrService.success(res.message, 'Sucesso', {timeOut: 2000});
-      this.getRolesUser();
+      this.getIngredients();
     } catch (err: any) {
       this.toastrService.error(err.error.message, 'Erro', {timeOut: 2000});
     }
@@ -98,32 +100,31 @@ export class RolesUser implements OnInit {
       msg += 'Nome inválido!<br>';
     }
 
-    if (this.modules.value?.length === 0) {
-      msg += 'Nenhum módulo foi selecionado!';
+    if (this.unitType.value === '') {
+      msg += 'Nenhuma Únidade de Medida foi selecionada!';
     }
 
     return msg;
   }
 
-  edit(roleUserId: number, roleUserName: string, roleUserModules: any) {
+  edit(ingredientId: number, ingredientName: string, unitTypeId: number) {
     const result = this.dialog.open(ModalEdit, {
       data: {
-        screen: 'roles-user',
-        title: 'Editar Tipo de Usuário',
-        name: roleUserName,
-        id: roleUserId,
-        role_user_modules: roleUserModules.map((m: any) => m.id),
-        modules: this.allModules
+        screen: 'ingredients',
+        title: 'Editar Ingrediente',
+        name: ingredientName,
+        id: ingredientId,
+        unit_type_id: unitTypeId,
+        unit_types: this.allUnitTypes
       }
     });
 
     result.afterClosed().subscribe((res) => {
-      if (!res || !res.type || res.type !== 'update') {
+      if (!res || !res.type || res.type !== 'update')
         return;
-      }
 
-      this.rolesUserService.update(roleUserId, res.data).then((resUpdate) => {
-        this.getRolesUser();
+      this.ingredientsService.update(ingredientId, res.data).then((resUpdate) => {
+        this.getIngredients();
         this.toastrService.success(resUpdate.message, 'Sucesso', { timeOut: 2000 });
       }, (errUpdate) => {
         this.toastrService.error(errUpdate.error.message, 'Erro', { timeOut: 2000 });
@@ -131,21 +132,20 @@ export class RolesUser implements OnInit {
     });
   }
 
-  async delete(roleUserId: number, roleUserName: string) {
+  async delete(ingredientId: number, ingredientName: string) {
     const result = this.dialog.open(ModalDelete, {
       data: {
-        title: 'Excluir Tipo de Usuário',
-        message: `Deseja realmente excluir o Tipo ${roleUserName}?`
+        title: 'Excluir Ingrediente?',
+        message: `Deseja realmente excluir ${ingredientName}?`
       }
     });
 
     result.afterClosed().subscribe((res) => {
-      if (res !== 'delete') {
+      if (res !== 'delete')
         return;
-      }
 
-      this.rolesUserService.delete(roleUserId).then((resDelete) => {
-        this.getRolesUser();
+      this.ingredientsService.delete(ingredientId).then((resDelete) => {
+        this.getIngredients();
         this.toastrService.success(resDelete.message, 'Sucesso', { timeOut: 2000 });
       }, (errDelete) => {
         this.toastrService.error(errDelete.error.message, 'Erro', { timeOut: 2000 });

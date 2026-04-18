@@ -8,6 +8,7 @@ import { Users } from './components/users/users';
 import { User } from './components/user/user';
 import { RolesUser } from './components/roles-user/roles-user';
 import { permissionGuard } from './guards/permission/permission-guard';
+import { Ingredients } from './components/ingredients/ingredients';
 
 export const routes: Routes = [
     {
@@ -25,7 +26,7 @@ export const routes: Routes = [
         path: 'users',
         component: Users,
         canActivate: [authGuard, permissionGuard],
-        data: { title: 'Usuários', icon: 'group', module: 'users' }
+        data: { title: 'Listagem Usuários', icon: 'group', module: 'users' }
     },
     {
         path: 'users/new',
@@ -50,5 +51,12 @@ export const routes: Routes = [
         component: Products,
         canActivate: [authGuard, permissionGuard],
         data: { title: 'Listagem de Produtos', icon: 'fastfood', module: 'products' }
+    },
+
+    {
+        path: 'products/ingredients',
+        component: Ingredients,
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Ingredientes de Produtos', icon: 'kitchen', module: 'products' }
     }
 ];

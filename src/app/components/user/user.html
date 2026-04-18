@@ -71,10 +71,7 @@
             </mat-form-field>
 
             @if (isEdition) {
-                <mat-form-field>
-                    <mat-label>Data de Última atualização</mat-label>
-                    <input matInput [formControl]="updated_at">
-                </mat-form-field>
+                <h4>Data de Última atualização: {{updated_at}}</h4>
             }
         </div>
 

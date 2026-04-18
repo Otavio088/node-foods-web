@@ -1,31 +1,42 @@
 <h2 mat-dialog-title class="d-flex align-items-center p-3"><mat-icon fontIcon="edit"></mat-icon> {{ data.title }}</h2>
 <mat-dialog-content class="p-2">
     <form [formGroup]="options">
-        @if (screen == 'roles-user') {
         <div class="form-fields gap-2">
             <mat-form-field>
                 <mat-label>Nome</mat-label>
-                <input matInput [formControl]="name" placeholder="Ex. Atendente">
+                <input matInput [formControl]="name" [placeholder]="screen == 'roles-user' ? 'Ex. Atendente' : 'Ex. Tomate'">
             </mat-form-field>
 
+        @if (screen == 'ingredients') {
+            <mat-form-field>
+                <mat-label>Unidade de Medida</mat-label>
+                <mat-select [formControl]="unit_type">
+                    @for (unitType of data.unit_types; track unitType) {
+                        <mat-option [value]="unitType.id">{{unitType.name + ' (' + unitType.type + ')'}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        }
+
+        @if (screen == 'roles-user') {
             <mat-form-field>
                 <mat-label>Módulos do Sistema</mat-label>
                 <mat-select [formControl]="modules" multiple>
                     <mat-select-trigger>
-                        {{ allModules.find(r => r.id === modules.value?.[0])?.name || '' }}
+                        {{ data.modules.find(r => r.id === modules.value?.[0])?.name || '' }}
                         @if ((modules.value?.length || 0) > 1) {
                             <span>
                             (+{{(modules.value?.length || 0) - 1}} {{modules.value?.length === 2 ? 'other' : 'others'}})
                             </span>
                         }
                     </mat-select-trigger>
-                    @for (module of allModules; track module) {
+                    @for (module of data.modules; track module) {
                         <mat-option [value]="module.id">{{module.name}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
-        </div>
         }
+        </div>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions>

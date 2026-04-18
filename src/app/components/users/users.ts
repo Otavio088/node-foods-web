@@ -36,7 +36,7 @@ export class Users implements OnInit {
   async getUsers() {
     const res = await this.userService.getAll();
     const users = res.data ? res.data.map((d: any) => ({
-      ...d, created_at_formatted: new Date(d.created_at).toLocaleString('pt-br')
+      ...d, created_at: new Date(d.created_at).toLocaleString('pt-br')
     })) : [];
 
     this.setupTableData(users);
