@@ -1,0 +1,54 @@
+.user-container mat-form-field + mat-form-field {
+  margin-left: 8px;
+}
+
+.user-container mat-form-field {
+  width: 100%;
+}
+
+.user-container form {
+  margin-bottom: 20px;
+}
+
+.user-container form > * {
+  margin: 12px 0;
+}
+
+.user-container .mat-radio-button {
+  margin: 0 12px;
+}
+
+table {
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .mobile-active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .mobile-buttons button {
+    width: 100%;
+  }
+
+  .exit-or-save {
+    margin: 0px !important;
+    display: flex;
+  }
+}

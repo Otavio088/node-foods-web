@@ -9,6 +9,7 @@ import { User } from './components/user/user';
 import { RolesUser } from './components/roles-user/roles-user';
 import { permissionGuard } from './guards/permission/permission-guard';
 import { Ingredients } from './components/ingredients/ingredients';
+import { Product } from './components/product/product';
 
 export const routes: Routes = [
     {
@@ -35,16 +36,16 @@ export const routes: Routes = [
         data: { title: 'Novo Usuário', icon: 'person_add', module: 'users' }
     },
     {
-        path: 'users/roles',
-        component: RolesUser,
-        canActivate: [authGuard, permissionGuard],
-        data: { title: 'Papéis de Usuário', icon: 'lock_person', module: 'users' }
-    },
-    {
         path: 'users/:id',
         component: User,
         canActivate: [authGuard, permissionGuard],
         data: { title: 'Edição de Usuário', icon: 'person_search', module: 'users' }
+    },
+    {
+        path: 'users/roles',
+        component: RolesUser,
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Papéis de Usuário', icon: 'lock_person', module: 'users' }
     },
     {
         path: 'products',
@@ -52,7 +53,18 @@ export const routes: Routes = [
         canActivate: [authGuard, permissionGuard],
         data: { title: 'Listagem de Produtos', icon: 'fastfood', module: 'products' }
     },
-
+    {
+        path: 'products/new',
+        component: Product,
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Novo Produto', icon: 'lunch_dining', module: 'products' }
+    },
+    {
+        path: 'products/:id',
+        component: Product,
+        canActivate: [authGuard, permissionGuard],
+        data: { title: 'Edição de Produto', icon: 'lunch_dining', module: 'products' }
+    },
     {
         path: 'products/ingredients',
         component: Ingredients,

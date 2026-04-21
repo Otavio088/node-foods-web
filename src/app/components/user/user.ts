@@ -169,9 +169,8 @@ export class User implements OnInit {
     });
 
     result.afterClosed().subscribe((res) => {
-      if (res !== 'delete') {
+      if (res !== 'delete')
         return;
-      }
 
       this.userService.delete(userId).then((resDelete) => {
         this.toastrService.success(resDelete.message, 'Sucesso', { timeOut: 2000 });

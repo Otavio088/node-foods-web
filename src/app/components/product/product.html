@@ -1,0 +1,94 @@
+<div class="user-container">
+    <div class="d-flex align-items-center justify-space-between mr-1">
+        <h2> Informações do Produto</h2>
+            @if (isEdition) {
+                <h4>Data de Última atualização: {{updated_at}}</h4>
+            }
+    </div>
+    <hr>
+    <br>
+    <form [formGroup]="options">
+        <div class="form-fields">
+            <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input matInput [formControl]="name" placeholder="Ex. Hamburger">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Preço </mat-label>
+                <input type="number" min="0" matInput [formControl]="price"
+                    placeholder="Ex. email@teste.com">
+            </mat-form-field>
+        </div>
+
+        <div class="form-fields">
+            <div class="d-flex gap-2 w-100" style="align-items: baseline;">
+                <mat-form-field>
+                    <mat-label>Ingredientes</mat-label>
+                    <mat-select [formControl]="ingredientsSelect">
+                        @for (ingredients of allIngredients; track ingredients) {
+                            <mat-option [value]="ingredients.id">{{ingredients.name + ' (' + ingredients.unit_type.type + ')'}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <button matButton="filled"><mat-icon fontIcon="add"></mat-icon> Adicionar Ingrediente</button>
+            </div>
+
+            <div class="table-container">
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ingrediente </th>
+                        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantidade </th>
+                        <td mat-cell *matCellDef="let row">
+                            <input type="number" min="0" value="{{row.quantity}}" style="border: none; background-color: rgba(238, 238, 238, 0.492); padding: 5px;">
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações</th>
+                        <td mat-cell *matCellDef="let row">
+                        <span class="d-flex">
+                            <!-- <button matIconButton (click)="edit(row.id)"><mat-icon fontIcon="edit"></mat-icon></button> -->
+                            <!-- <button matIconButton (click)="delete(row.id, row.name)"><mat-icon fontIcon="delete"></mat-icon></button> -->
+                        </span>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">Nenhum Ingrediente foi encontrado...</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-fields">
+            <mat-form-field class="w-50">
+                <mat-label>Descrição </mat-label>
+                <textarea matInput [formControl]="description"
+                    placeholder="Ex. Descrição do produto...">
+                </textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="d-flex justify-space-between mobile-buttons">
+            <div>
+                @if (isEdition) {
+                    <button matButton="filled" (click)="return()"><mat-icon fontIcon="keyboard_return"></mat-icon> Voltar</button>
+                }
+            </div>
+            <div class="exit-or-save">
+                @if (isEdition) {
+                    <button class="mr-1" matButton="filled" (click)="delete()" style="background-color: #DE3D20;"><mat-icon fontIcon="delete"></mat-icon> Excluir</button>
+                }
+                <button matButton="filled" (click)="save()"><mat-icon fontIcon="save"></mat-icon> {{ isEdition ? 'Atualizar' : 'Salvar' }} </button>
+            </div>
+        </div>
+    </form>
+</div>

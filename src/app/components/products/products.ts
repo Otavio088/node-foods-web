@@ -58,15 +58,15 @@ export class Products implements OnInit {
     }
   }
 
-  edit(userId: number) {
-    this.router.navigateByUrl(`products/${userId}`);
+  edit(id: number) {
+    this.router.navigateByUrl(`products/${id}`);
   }
 
-  async delete(userId: number, userName: string) {
+  async delete(id: number, name: string) {
     const result = this.dialog.open(ModalDelete, {
       data: {
         title: 'Excluir Produto',
-        message: `Deseja realmente excluir o Produto ${userName}?`
+        message: `Deseja realmente excluir o Produto ${name}?`
       }
     });
 
@@ -75,7 +75,7 @@ export class Products implements OnInit {
         return;
       }
 
-      this.productService.delete(userId).then((resDelete) => {
+      this.productService.delete(id).then((resDelete) => {
         this.getProducts();
         this.toastrService.success(resDelete.message, 'Sucesso', { timeOut: 2000 });
       }, (errDelete) => {
